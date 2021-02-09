@@ -11,6 +11,8 @@ To query the database (locally):
 - `npm run start` will start the sever on localhost:5000
 - navigate to localhost:5000/graphql
 
+### Get data from all launches
+
 <code>  
 {
     launches {
@@ -22,7 +24,7 @@ To query the database (locally):
     }
 } </code>
 
-Will return an object such as
+Will return:
 
 <code>
 {
@@ -33,8 +35,31 @@ Will return an object such as
         "rocket": {
             "rocket_id": "falcon1"
         }
+        ...etc
       }
     ]
+  }
+}
+</code>
+
+### Get launches by flight_number
+
+<code>
+  {
+    launch(flight_number: 2) {
+      mission_name
+    }
+  }
+</code>
+
+Will return:
+
+<code>
+{
+  "data": {
+    "launch": {
+      "flight_number": 2
+    }
   }
 }
 </code>
