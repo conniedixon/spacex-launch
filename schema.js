@@ -48,12 +48,31 @@ const RootQuery = new GraphQLObjectType({
         launch: {
             type: LaunchType,
             args: {
-                flight_number: {
-                    type: GraphQLInt
-                }
+                flight_number: { type: GraphQLInt }
             },
             resolve(parent, args) {
                 return axios.get(`https://api.spacexdata.com/v3/launches/${args.flight_number}`)
+                .then(res=>res.data)
+            }
+        },
+        rockets: {
+            type: new GraphQLList(RocketType),
+            resolve(parent, args) {
+                //make request to actual db inside here
+                return axios.get('https://api.spacexdata.com/v3/rockets')
+                .then(res=>res.data)
+            }
+        },
+        //passing in params
+        rocket: {
+            type: RocketType,
+            args: {
+                flight_number: {
+                    id: {type: GraphQLInt}
+                }
+            },
+            resolve(parent, args) {
+                return axios.get(`https://api.spacexdata.com/v3/rockets/${args.id}`)
                 .then(res=>res.data)
             }
         }
